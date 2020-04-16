@@ -7,6 +7,7 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 url = "https://www.businesssellcanada.com/sale/buymain.htm?reload=898"
 r = requests.get(url, headers=headers)
 soup = BeautifulSoup(r.text, 'html.parser')
+
 arr = []
 arr2 = []
 dic= {}
