@@ -14,7 +14,6 @@ j = 0
 print(j)
 main = soup.find('div',class_='selllist')
 for i in main.find_all("tr"):
-    
     try:
         # For Descrition
         try:
@@ -38,7 +37,6 @@ for i in main.find_all("tr"):
             dic['Location'] = obj3.text
         except Exception as e:
             pass
-        
         
         # adding href to array
         try:
@@ -82,12 +80,6 @@ for i in main.find_all("tr"):
         #    print('out')
             pass
         
-        #with open("data.json", "w") as outfile: 
-        #    jsonFile.seek(0)
-        #    json.dump(arr2, outfile)
-        
-        
-
         if bool(dic):
             with open("data3.json", "a") as jsonFile:
                 json.dump(dic, jsonFile,indent=2)
@@ -100,8 +92,7 @@ for i in main.find_all("tr"):
         #print('out2')
         pass
 
-
-
+# for more pages    
 page = ['02','03','04','05','06','07','08','09','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29']
 for p in page:
     url = "https://www.businesssellcanada.com/sale/bumain{}.htm".format(p)
@@ -111,7 +102,6 @@ for p in page:
     j=0
     main2 = soup2.find('div',class_='selllist')
     for k in main2.find_all("tr"):
-    
         try:
             # For Descrition
             try:
@@ -135,7 +125,6 @@ for p in page:
                 dic['Location'] = obj3.text
             except Exception as e:
                 pass
-            
             
             # adding href to array
             try:
@@ -179,13 +168,6 @@ for p in page:
                 #print('out')
                 pass
             
-            #with open("data.json", "w") as outfile: 
-            #    jsonFile.seek(0)
-            #    json.dump(arr2, outfile)
-
-
-
-
             if bool(dic):
                 with open("data3.json", "a") as jsonFile:
                     json.dump(dic, jsonFile,indent=2)
