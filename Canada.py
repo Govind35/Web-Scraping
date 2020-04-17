@@ -7,7 +7,6 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 url = "https://www.businesssellcanada.com/sale/buymain.htm?reload=898"
 r = requests.get(url, headers=headers)
 soup = BeautifulSoup(r.text, 'html.parser')
-
 arr = []
 arr2 = []
 dic= {}
@@ -15,6 +14,7 @@ j = 0
 print(j)
 main = soup.find('div',class_='selllist')
 for i in main.find_all("tr"):
+    
     try:
         # For Descrition
         try:
@@ -28,16 +28,16 @@ for i in main.find_all("tr"):
             obj2 = i.find("a",class_='buy-sp')
             #print('Price :'+obj2.text)
             dic['Price'] = obj2.text
-        
         except Exception as e:
             pass
         # for location
         try:
-            obj3 = i.find("a",class_='buy-pca')
+            obj3 = i.find("td",class_='buy-pc')
             #print('Location :'+obj3.text)
             dic['Location'] = obj3.text
         except Exception as e:
             pass
+        
         
         # adding href to array
         try:
@@ -61,28 +61,49 @@ for i in main.find_all("tr"):
                         print('go')
                         cnt += 1
                     elif cnt == 1:
-                        print('Financial info :'+var.text)
-                        dic['Financial info'] = var.text
+                        if var.text == "\n":
+                            print('Market & Competition :'+var.text)
+                            pass
+                        else:
+                            print('Financial info :'+var.text)
+                            dic['Financial info'] = var.text
                         cnt += 1
                     elif cnt == 2:
-                        if var.find_all('blockquote'):
+                        if var.find_all('blockquote') or var.find('li'):
+                            print('goGOGO')
                             print('Included,Excluded & option :'+var.text)
                             dic['Options'] = var.text
                         else:
-                            print('Market & Competition :'+var.text)
-                            dic['Competition'] = var.text
+                            if var.text == "\n":
+                                pass
+                                print('Market & Competition :'+var.text)
+                                
+                            else:
+                                print('Market & Competition :'+var.text)
+                                dic['Competition'] = var.text
                         cnt += 1
                     else:
-                        print('Included,Excluded & option :'+var.text)
-                        dic['Options'] = var.text
+                        if var.text == "\n\n":
+                            pass
+                            print('Included,Excluded & option :'+var.text)
+                            
+                        else:
+                            print('Included,Excluded & option :'+var.text)
+                            dic['Options'] = var.text
             j += 1
             
         except Exception as e:
         #    print('out')
             pass
         
+        #with open("data.json", "w") as outfile: 
+        #    jsonFile.seek(0)
+        #    json.dump(arr2, outfile)
+        
+        
+
         if bool(dic):
-            with open("data3.json", "a") as jsonFile:
+            with open("data2.json", "a") as jsonFile:
                 json.dump(dic, jsonFile,indent=2)
         #arr2.append(dic)    
         #print(dic)
@@ -93,7 +114,8 @@ for i in main.find_all("tr"):
         #print('out2')
         pass
 
-# for more pages    
+
+
 page = ['02','03','04','05','06','07','08','09','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29']
 for p in page:
     url = "https://www.businesssellcanada.com/sale/bumain{}.htm".format(p)
@@ -103,6 +125,7 @@ for p in page:
     j=0
     main2 = soup2.find('div',class_='selllist')
     for k in main2.find_all("tr"):
+    
         try:
             # For Descrition
             try:
@@ -121,11 +144,12 @@ for p in page:
                 pass
             # for location
             try:
-                obj3 = k.find("a",class_='buy-pca')
+                obj3 = k.find("td",class_='buy-pc')
                 #print('Location :'+obj3.text)
                 dic['Location'] = obj3.text
             except Exception as e:
                 pass
+            
             
             # adding href to array
             try:
@@ -149,28 +173,49 @@ for p in page:
                             print('go')
                             cnt += 1
                         elif cnt == 1:
-                            print('Financial info :'+var.text)
-                            dic['Financial info'] = var.text
+                            if var.text == "\n":
+                                print('Market & Competition :'+var.text)
+                                pass
+                            else:
+                                print('Financial info :'+var.text)
+                                dic['Financial info'] = var.text
                             cnt += 1
                         elif cnt == 2:
-                            if var.find_all('blockquote'):
+                            if var.find_all('blockquote') or var.find('li'):
                                 print('Included,Excluded & option :'+var.text)
                                 dic['Options'] = var.text
                             else:
-                                print('Market & Competition :'+var.text)
-                                dic['Competition'] = var.text
+                                if var.text == "\n":
+                                    pass
+                                    print('Market & Competition :'+var.text)
+                                    
+                                else:
+                                    print('Market & Competition :'+var.text)
+                                    dic['Competition'] = var.text
                             cnt += 1
                         else:
-                            print('Included,Excluded & option :'+var.text)
-                            dic['Options'] = var.text
+                            if var.text == "\n\n":
+                                pass
+                                print('Included,Excluded & option :'+var.text)
+                                
+                            else:
+                                print('Included,Excluded & option :'+var.text)
+                                dic['Options'] = var.text
                 j += 1
 
             except Exception as e:
                 #print('out')
                 pass
             
+            #with open("data.json", "w") as outfile: 
+            #    jsonFile.seek(0)
+            #    json.dump(arr2, outfile)
+
+
+
+
             if bool(dic):
-                with open("data3.json", "a") as jsonFile:
+                with open("data2.json", "a") as jsonFile:
                     json.dump(dic, jsonFile,indent=2)
             #arr2.append(dic)    
             #print(dic)
